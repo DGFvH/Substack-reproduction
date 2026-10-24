@@ -1,0 +1,44 @@
+== R/02_cbs_production_index.R
+check ok: CBS 85806NED: machinery and all manufacturing, monthly from 2005MM01 to 2026MM08 
+check ok: CBS 85806NED: twelve months in every year 2005-2025, eight in 2026 (Jan-Aug) 
+== R/03_korea_capacity.R
+check ok: Korea capacity: 2 series x 10 years, hand-entered, 2020 = 100 
+check ok: Korea capacity: both series run 2016-2025 in order and equal 100 in 2020 
+== R/04_taiwan_moea.R
+check ok: d.csv extract: five complete, unique production index series, 2021 = 100 
+check ok: d.csv: total manufacturing (C) and I1 to I4 complete from January 1982 to August 2026 
+check ok: d.csv: twelve months per series in every year 1982-2025 
+check ok: Taiwan: chemicals (I3) and consumer goods (I4) fell from 2019 to 2025 
+== R/05_asml.R
+check ok: ASML: regions sum to the published total (within rounding) 
+== R/06_boom_bust.R
+check ok: Taiwan I2: decline count measures falling years, not drawdown episodes 
+check ok: d.csv: the 2026 weights reproduce C to rounding; one set of weights for 2021-2026 does not 
+check ok: Taiwan: inferred I2 index contribution lies between zero and one 
+check ok: nama_10_a64: 2025 gross value added of manufacturing and machinery, current EUR million 
+== R/07_manufacturing_by_economy.R
+check ok: Eurostat sts_inpr_a: annual, not seasonally adjusted manufacturing production volume index, 2021 = 100, 2019 and 2025 
+check ok: OECD DF_INDSERV: manufacturing production volume index, neither seasonally nor calendar adjusted 
+check ok: OECD DF_INDSERV: unique economy/frequency/period observations, positive indices and valid monthly or quarterly periods 
+check ok: OECD DF_INDSERV: source dataset identifiers match the two local snapshots 
+check ok: OECD DF_INDSERV: a full year of observations for every economy, 2019 and 2025 
+check ok: Taiwan: twelve monthly observations in each endpoint year 
+check ok: Figure 1: 74 unique positive index levels covering both endpoint years for all 37 economies 
+check ok: Figure 1: a 2019 to 2025 change for all 37 economies 
+check ok: Netherlands: Eurostat (7.40%) and CBS, seasonally adjusted (7.63%), agree within 1 point 
+check ok: World Bank: unique positive 2019 manufacturing value-added weights for all 38 OECD members 
+check ok: Figure 1: local index snapshots cover 36 OECD members, excluding Costa Rica and Iceland, with positive weights 
+check ok: Figure 1: six of the seven G7 economies are below 2019, all but the United Kingdom 
+check ok: Figure 1: Taiwan, South Korea and the Netherlands rank in the top half by all-manufacturing index change among the covered OECD members plus Taiwan 
+== R/08_oecd_tiva.R
+check ok: TiVA: 2025 edition, annual 2022 gross exports and gross output, USD million, partner World 
+check ok: TiVA 2022: unique economy/industry/measure/year observations 
+check ok: TiVA 2022: positive nonmissing gross exports and gross output for every economy and industry used 
+check ok: TiVA 2022: an export share of gross output between 0 and 100% for all six economy/industry pairs used 
+== R/09_charts.R
+check ok: fig_1.svg is well-formed XML 
+check ok: fig_2.svg is well-formed XML 
+check ok: Figure 3: the two largest shaded falls are labelled -14% and -16% 
+check ok: fig_3.svg is well-formed XML 
+check ok: numbers.csv: every row has the script line that computes it 
+numbers.csv: 40 rows. Finished in 2.1 s

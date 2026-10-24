@@ -1,0 +1,149 @@
+SOURCES OF THE ANALYSIS (analysis.R)
+Industrial Dependencies, October 2026
+
+The 9 active input files in Data/ are listed below with publisher, landing page, original download address,
+licence and access date. Original dataset IDs are retained where still used in scripts and in the "dataset" column of
+output/numbers.csv; removed sources leave gaps in the numbering.
+
+Files marked [HAND-ENTERED] are manually transcribed snapshots, not automatically refreshed. Downloaded inputs are
+either unchanged or locally filtered as specified below; the extracts are not pristine downloads. Filtering retained original
+value strings, flags and period metadata; no price/time updates or aggregation were applied. Row counts exclude headers.
+The two OECD manufacturing snapshots are combined with an added source_dataset column (D27/D31) to preserve provenance
+and their different access dates. Original snapshots are retained under backup/pdf-audit-2026-10-23/ (ignored by Git).
+
+Figure 1 uses related but not identical national production-volume index series. The annual percentage change is
+calculated within each country's own series; it is not a comparison of index point levels. Different base years cancel
+in that within-series ratio, but differences in frequency and seasonal/calendar adjustment remain, so small cross-country
+differences should not be read as perfectly harmonized estimates.
+  D25 Eurostat: annual manufacturing (NACE C) production-volume observations, unit I21 (2021=100), s_adj=NSA.
+  D27/D31 OECD: manufacturing production-volume index, unit IX (2015=100), adjustment N; monthly except quarterly
+  for Australia and New Zealand. The analysis uses the arithmetic mean of each year's monthly/quarterly observations.
+  D22 Taiwan MOEA: monthly industrial production index, 110年=100 (2021=100); the analysis uses annual means.
+  Netherlands: Figure 1 uses D25 Eurostat. The Dutch national comparison and Figure 2 use D6 CBS, a monthly
+  seasonally and calendar-adjusted series; annual values there are arithmetic means. Their 2019-2025 changes therefore
+  differ slightly (7.40% from Eurostat versus 7.63% from CBS for all manufacturing).
+  South Korea: Figure 1 uses the OECD manufacturing production-volume index; Figure 2 separately shows a hand-entered
+  production-capacity index. These are different measures.
+
+
+=====================================================================================================================
+1. HAND-ENTERED: VALUES TYPED IN FROM THE SOURCE PAGE
+=====================================================================================================================
+
+[HAND-ENTERED] D16  Korea, manufacturing production capacity index, 2020=100, annual 2016 to 2025
+                    (all manufacturing and semiconductor manufacturing).
+  File:     Data/korea_capacity_hand_entered.csv
+  Method:   hand-entered snapshot of the published table; not refreshed automatically.
+  Source:   Ministry of Data and Statistics (국가데이터처), Mining and Manufacturing Survey (광업제조업동향조사),
+            table 제조업 생산능력 및 가동률 지수, via Bank of Korea ECOS table 901Y035.
+  Pages:    https://ecos.bok.or.kr  (statistics search, table 901Y035)
+            https://kosis.kr/statHtml/statHtmlContent.do?orgId=101&tblId=DT_1F32001  (the same table on KOSIS)
+  Licence:  KOSIS statistics use guidelines: reuse with the source named, published values unaltered
+            (https://kosis.kr/serviceInfo/useGuide.do)
+  Accessed: 16 October 2026
+
+[HAND-ENTERED] D18  ASML Holding N.V., Annual Report on Form 20-F for 2025: net sales by geographic region, EUR million
+                    (XBRL page R71), and the basis of the regions, the location of customers' facilities (page R14).
+  File:     Data/asml_r71_2025_hand_entered.csv
+  Why:      read from the SEC's web pages of the filing; no data file.
+  Pages:    https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm
+            https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R14.htm
+  Licence:  public filing; the figures are facts, cited with their source.
+  Accessed: 16 October 2026
+
+
+=====================================================================================================================
+2. INCLUDED IN Data/
+=====================================================================================================================
+
+--- Statistics Netherlands (CBS) ----------------------------------------------------------------------------------
+Licence for all CBS files: CC BY 4.0 (source: CBS).
+
+D6  Nijverheid; productie en omzet (industry production index), 2021=100, seasonally and calendar adjusted (A050903_1):
+    machinery (C28) and all manufacturing, monthly from 2005.
+    File:     Data/cbs_85806NED_A050903_1_prodindex_2005_c28_total.json
+    Extract:  520 of 734 observations: monthly Perioden (MM) only, C and C28, January 2005 to August 2026.
+              Annual and quarterly observations removed; other JSON metadata retained.
+    Landing:  https://www.cbs.nl/nl-nl/cijfers/detail/85806NED
+    Download: (OData API)
+              https://datasets.cbs.nl/odata/v1/CBS/85806NED/Observations?$filter=Measure%20eq%20'A050903_1'%20and%20(BedrijfstakkenBranchesSBI2008%20eq%20'307500'%20or%20BedrijfstakkenBranchesSBI2008%20eq%20'336500')%20and%20Perioden%20ge%20'2005'
+    Accessed: 19 October 2026
+
+Definition references checked on 23 October 2026 (no observations refreshed):
+  Eurostat, Glossary: Production index. A volume/activity indicator aimed at value added, implemented using proxies;
+  not nominal sales or an economy-wide GDP index.
+  https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Production_index
+  CBS 85806ENG, table explanation: production volume versus turnover; seasonal adjustment also includes calendar effects.
+  https://www.cbs.nl/en-gb/figures/detail/85806ENG
+
+--- Eurostat -------------------------------------------------------------------------------------------------------
+Licence for all Eurostat files: CC BY 4.0 (Eurostat reuse policy; source credited, changes indicated).
+
+D3  Gross value added by industry, current prices (nama_10_a64), Netherlands; original download covers 2021 to 2025.
+    File:     Data/nl_manufacturing_machinery_gva_2025.csv
+    Extract:  2 of 40 rows: TIME_PERIOD=2025, nace_r2=C or C28, B1G, CP_MEUR. Original columns retained.
+    Landing:  https://ec.europa.eu/eurostat/databrowser/view/nama_10_a64/default/table
+    Download: https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/nama_10_a64/A.CP_MEUR.C+C26+C27+C28+C29+C30+C31_C32+C33.B1G.NL?startPeriod=2021&format=SDMX-CSV
+    Accessed: 16 October 2026
+
+D25 Production in industry, annual data (sts_inpr_a): manufacturing (NACE C), production volume index, 2021=100.
+    Original download includes the NSA and CA series, 2015 to 2025; the local extract retains s_adj=NSA only.
+    File:     Data/eurostat_manufacturing_2019_2025.csv
+    Extract:  48 of 821 rows: s_adj=NSA, TIME_PERIOD=2019 or 2025, the 24 geographies AT, BE, CZ, DK, EE, FI, FR, DE,
+              EL, HU, IE, IT, LV, LT, LU, NL, NO, PL, PT, SK, SI, ES, SE, CH; original columns retained.
+    Landing:  https://ec.europa.eu/eurostat/databrowser/view/sts_inpr_a/default/table
+    Download: https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/sts_inpr_a/A.PRD.C.NSA+CA.I21.?startPeriod=2015&format=SDMX-CSV
+    Accessed: 19 October 2026
+
+--- OECD ------------------------------------------------------------------------------------------------------------
+Licence for all OECD files: OECD Terms and Conditions (CC BY 4.0 by default since July 2024),
+https://www.oecd.org/en/about/terms-conditions.html
+
+D27 Production, sales, work started and orders (DF_INDSERV): manufacturing production volume index, 2015=100, for the
+    United States, Japan, South Korea, Canada, Australia, the United Kingdom, New Zealand and Israel; monthly or quarterly
+    (not adjusted).
+    File:     Data/oecd_manufacturing_2019_2025.csv (shared with D31)
+    Extract:  D27 and D31 combined: 256 of 758+483 rows, years 2019 and 2025 only; quarterly for AUS/NZL, monthly for
+              the other ten economies. Original schema retained plus source_dataset=D27 or D31; no averaging in the file.
+    Landing:  https://data-explorer.oecd.org/
+    Download: https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES@DF_INDSERV,/USA+JPN+KOR+CAN+AUS+GBR+NZL+ISR.M+Q.PRVM.IX.C.N...?startPeriod=2019-01&format=csvfilewithlabels
+    Accessed: 19 October 2026
+
+D31 The same dataset for Chile, Colombia, Mexico and Turkey (monthly and quarterly, not adjusted), used in the
+    author-calculated OECD-member average.
+    File:     Data/oecd_manufacturing_2019_2025.csv (source_dataset=D31; combined extract described above)
+    Download: https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES@DF_INDSERV,/CHL+COL+MEX+TUR.M+Q.PRVM.IX.C.N...?startPeriod=2019-01&format=csvfilewithlabels
+    Accessed: 21 October 2026
+
+D29 Trade in Value Added (TiVA), 2025 edition, principal indicators. Original download: gross exports, output, value added
+    and imports (levels), Netherlands, Germany, South Korea and Chinese Taipei, industries C26, C28, C29 and C, 2015 to 2022.
+    File:     Data/oecd_tiva2025_exports_output_2022.csv
+    Extract:  12 of 640 rows: 2022, measures EXGR and PROD, C26 for NLD/DEU/KOR/TWN and C29 for DEU/KOR.
+              Original columns retained; unused VALU, IMGR and IMGR_INT observations removed. Ratios in the analysis are
+              gross exports / gross output, not value-added export shares; C26 is broad electronics, not chips alone.
+    Landing:  https://www.oecd.org/en/data/datasets/trade-in-value-added.html
+    Download: https://sdmx.oecd.org/sti-public/rest/data/OECD.STI.PIE,DSD_TIVA_MAINLV@DF_MAINLV,1.1/EXGR+PROD+VALU+IMGR+IMGR_INT.NLD+DEU+KOR+TWN.C26+C28+C29+C.W.USD.A?startPeriod=2015&format=csvfilewithlabels
+    Accessed: 19 October 2026
+
+--- World Bank -----------------------------------------------------------------------------------------------------
+D32 World Development Indicators: Manufacturing, value added (current US$), NV.IND.MANF.CD, 2019, the 38 OECD members
+    (weights for author-calculated fixed-weight OECD-member and G7 averages in figure 1, not official aggregates).
+    File:     Data/worldbank_NV.IND.MANF.CD_2019_oecd38.json
+    Local:    unchanged, all 38 members retained. The OECD-member average uses the 36 with local production indices;
+              Costa Rica and Iceland lack index observations. Taiwan is not included in the OECD-member average.
+    Landing:  https://data.worldbank.org/indicator/NV.IND.MANF.CD
+    Download: https://api.worldbank.org/v2/country/AUS;AUT;BEL;CAN;CHE;CHL;COL;CRI;CZE;DEU;DNK;ESP;EST;FIN;FRA;GBR;GRC;HUN;IRL;ISL;ISR;ITA;JPN;KOR;LTU;LUX;LVA;MEX;NLD;NOR;NZL;POL;PRT;SVK;SVN;SWE;TUR;USA/indicator/NV.IND.MANF.CD?date=2019&format=json&per_page=100
+    Licence:  CC BY 4.0
+    Accessed: 21 October 2026
+
+--- Taiwan: Ministry of Economic Affairs (MOEA) --------------------------------------------------------------------
+Licence for all Taiwanese files: Open Government Data License, version 1.0 (https://data.gov.tw/license)
+
+D22 MOEA Department of Statistics, industrial production index (工業生產, file d.csv), 2021=100, monthly from 1982.
+    Original download contains 124,948 rows across 236 series.
+    File:     Data/taiwan_manufacturing_monthly.csv
+    Extract:  2,680 rows: codes C, I1, I2, I3 and I4 only, all 536 months January 1982 to August 2026; original six
+              columns retained. C is total manufacturing; I2 is ICT and electronics, not a semiconductor-only series.
+    Landing:  https://data.gov.tw/dataset/6607
+    Download: https://service.moea.gov.tw/EE520/opendata/d.csv
+    Accessed: 19 October 2026
